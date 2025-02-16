@@ -27,8 +27,8 @@ from math import floor
 
 
 # 1. CREATE ROUTE FOR '/api/set/combination'
-    @app.route('/api/set/combination/', methods=['POST'])
-   def set_combination():
+@app.route('/api/set/combination/', methods=['POST'])
+def set_combination():
     if request.method == 'POST':
         try:
             # Extract passcode from form data
@@ -49,16 +49,16 @@ from math import floor
             print(f"set_combination error: f{str(e)}")
 
 # 2. CREATE ROUTE FOR '/api/check/combination'
- @app.route('/api/check/combination/', methods=['POST'])
+@app.route('/api/check/combination/', methods=['POST'])
 def check_combination():
     print("here")
     if request.method == 'POST':
         try:
             form =  request.form
- 
             passcode = escape(form.get("passcode"))
             print(passcode)
-
+            # Call the function to check the passcode
+            print(passcode)
             result = mongo.check_passcode(passcode)
             if result:
                 return jsonify({"status": "complete", "data": "complete"})
@@ -66,25 +66,21 @@ def check_combination():
                 return jsonify({"status": "failed", "data": "failed"})
         except Exception as e:
             print(f"check_combination error: f{str(e)}")
-
+        
 # 3. CREATE ROUTE FOR '/api/update'
-   @app.route('/api/update', methods=['POST'])
-   def update_data():
+@app.route('/api/update', methods=['POST'])
+def update_data():
     print("here")
     if request.method == 'POST':
-        try:
-            
-            # Publish the modified data to a topic subscribed to by the frontend
+        try:  
             json_data = request.get_json()
             now = datetime.now()
             timestamp = int(now.timestamp())
             json_data['timestamp'] = timestamp
-            Mqtt.publish('620156694_sub', dumps(json_data))
-            Mqtt.publish('620156694_pub', dumps(json_data))
-            Mqtt.publish('620156694', dumps(json_data))
+            Mqtt.publish('620162321_sub', dumps(json_data))
+            Mqtt.publish('620162321_pub', dumps(json_data))
+            Mqtt.publish('620162321', dumps(json_data))
             print(type(json_data))
-
-            # Inserts the modified object into the 'radar' collection of the database
             result = mongo.insert_data(json_data)
             if result:
                 return jsonify({"status": "complete", "data": "complete"})
@@ -92,13 +88,12 @@ def check_combination():
                 return jsonify({"status": "failed", "data": "failed"})
         except Exception as e:
            print(f"update_data error: f{str(e)}")
-
 # 4. CREATE ROUTE FOR '/api/reserve/<start>/<end>'
-     @app.route('/api/reserve/<start>/<end>', methods=['GET'])
-    def get_reservation(start, end):
+@app.route('/api/reserve/<start>/<end>', methods=['GET'])
+def get_reservation(start, end):
      start = int(start)
      end = int(end)
-    
+    # Call function to get reserved objects
      if request.method == 'GET':
         try:
             data = mongo.get_reserved_objects(start, end)
@@ -107,10 +102,10 @@ def check_combination():
         except Exception as e:
            print(f"get_reservation error: f{str(e)}")
         return jsonify({"status": "failed", "data": 0})
-
 # 5. CREATE ROUTE FOR '/api/avg/<start>/<end>'
 @app.route('/api/avg/<start>/<end>', methods=['GET'])
 def get_average(start, end):
+    # Call function to calculate average
      if request.method == 'GET':
         try:
             average = mongo.get_average(start, end)
@@ -118,7 +113,6 @@ def get_average(start, end):
                 return jsonify({"status": "found", "data": average})
         except Exception as e:
             return jsonify({"status": "failed", "data": 0})
-
 
    
 
