@@ -1,0 +1,29 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "The Hardware component has two tasks: (1) Implement a remote authentication sub-system as part of a Home Automation System, for the main entrance of a Smart Home. This enables home owners to grant temporary access to their home, by providing their guest with a 4 digit passcode. Subsequently, the pin can be change remotely, after the guest leaves. (2) A real-time water management sub-system for the Home Automation System, to monitor the water levels of a 1000 US Gal storage tank located on the compound.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbuwi/homeautomation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbuwi/homeautomation/issues"
+  },
+  "homepage": "https://github.com/dbuwi/homeautomation#readme",
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}
